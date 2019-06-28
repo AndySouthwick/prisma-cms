@@ -1,0 +1,86 @@
+type User {
+  id: ID! @id
+  email: String @unique
+  name: String!
+  pages: [Page!]!
+  hashed: String!
+}
+
+type Page {
+  id: ID! @id
+  title: String!@unique
+  published: Boolean! @default(value: false)
+  user: User @relation(link: INLINE)
+  contentAreas: [ContentArea]
+}
+
+type ContentArea {
+ id: ID! @id
+ areaName: String
+ content: [Content]
+ page: Page!  @relation(link: INLINE)
+ order: Int! @default(value: 1)
+}
+
+type Content {
+  order: Int
+ id: ID! @id
+ contentTypeName: String
+ texts: [Text]
+ richTexts: [RichText]
+ fileUpload: String
+ reference: [Reference]
+ toggle: Boolean
+ contentArea: ContentArea  @relation(link: INLINE)
+}
+
+type Text {
+id: ID! @id
+content: Content  @relation(link: INLINE)
+ inputTypeName: String
+  inputTypeValue: String
+}
+type RichText {
+id: ID! @id
+content: Content  @relation(link: INLINE)
+ inputTypeName: String
+  inputTypeValue: String
+}
+type Reference {
+id: ID! @id
+content: Content  @relation(link: INLINE)
+ inputTypeName: String
+  inputTypeValue: String
+}
+
+
+
+
+
+
+
+type ContentType {
+ id: ID! @id
+ typeName: String! @unique
+ inputTypes: [InputType]
+}
+
+type InputType {
+id: ID! @id
+label: String
+help: String
+input: Input
+contentType: ContentType!  @relation(link: INLINE)
+}
+
+
+
+enum Input{
+ITERABLE
+TEXT
+RICH_TEXT
+FILE_UPLOAD
+DATE_RANGE
+REFERENCE
+TOGGLE
+}

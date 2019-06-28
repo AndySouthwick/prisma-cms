@@ -1,0 +1,125 @@
+type Mutation {
+  updateUser(userId: ID!, email: String, hashed: String, name: String): User
+  createUser(name: String! email: String! hashed: String!): User
+  loginUser(email: String!, hashed: String!):AuthenticatedToken
+  createContentType(typeName: String, inputType: ID):ContentType
+  addInputTypeToContentType(contentTypeId: ID!, label: String, help: String, input: Input):InputType
+  updateInputType(inputTypeId: ID!, label: String, help: String, input: Input):InputType
+  createDraft(title: String!, userId: ID!): Page
+  publish(pageId: ID!): Page
+  createContentArea(pageId: ID, areaName: String): ContentArea
+  updateContentArea(areaId: ID,  areaName: String, order: Int):ContentArea
+  createText(inputTypeName: String, inputTypeValue: String): Text
+  addContentToArea(areaId: ID, contentTypeName: String): Content
+  addContentToPage(pageId: ID, contentTypeName: String): Content
+  addTextToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): Text
+  addRichTextToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): RichText
+  addReferenceToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): Reference
+  updateContent(file: String, togle: Boolean): Content
+}
+
+type AuthenticatedToken {
+  token: String
+}
+
+type Query {
+  inputTypesOfContentType(contentTypeId: ID, contentTypeName: String): [InputType!]
+  isAuthenticated:AuthenticatedToken
+  allContentTypes:[ContentType]
+  inputTypes: [InputType]
+  page(pageId: ID! orderBy: SortableField): Page
+  contentAreas(orderBy: SortableField): [ContentArea!]!
+  contentAreasOnPage(pageId: ID, orderBy: SortableField): [ContentArea!]!
+  allUsers: [User]
+  allContent: [Content]
+  contentArea(areaId: ID): ContentArea
+  allPages: [Page!]!
+  content(id: ID!):Content
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String!
+  pages: [Page!]!
+  hashed: String!
+}
+
+type Page {
+  id: ID!
+  title: String!
+  published: Boolean!
+  user: User
+  contentAreas: [ContentArea]
+}
+
+
+type ContentArea {
+  id: ID!
+  areaName: String
+  content: [Content]
+  page: Page!
+  order: Int!
+}
+
+
+type Content {
+  contentArea: ContentArea
+  page: Page
+  id: ID!
+  contentTypeName: String
+  texts: [Text]
+  richTexts: [RichText]
+  fileUpload: String
+  reference: [Reference]
+  toggle: Boolean
+
+}
+
+type Text {
+  id: ID!
+  content: Content!
+  inputTypeName: String
+  inputTypeValue: String
+}
+
+type RichText {
+  id: ID!
+  content: Content!
+  inputTypeName: String
+  inputTypeValue: String
+}
+
+type Reference {
+  id: ID!
+  content: Content!
+  inputTypeName: String
+  inputTypeValue: String
+}
+
+type ContentType {
+  id: ID!
+  typeName: String!
+  inputTypes: [InputType]
+}
+type InputType {
+  id: ID!
+  label: String
+  help: String
+  input: Input
+  contentType: ContentType!
+}
+
+enum Input{
+  TEXT
+  RICH_TEXT
+  FILE_UPLOAD
+  DATE_RANGE
+  REFERENCE
+  TOGGLE
+}
+
+enum SortableField {
+  order_ASC
+  order_DESC
+}

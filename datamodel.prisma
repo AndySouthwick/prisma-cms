@@ -66,12 +66,33 @@ type ContentType {
 }
 
 type InputType {
+orderNumber: Int
 id: ID! @id
 label: String
 help: String
 input: Input
 contentType: ContentType!  @relation(link: INLINE)
 }
+
+type Image {
+  id: ID! @id
+  imageUrl: String
+  altText: String
+  markets: [Market] @relation(name: "ImageMarket")
+  imageDimensions: String
+  thumbnail: String
+}
+type Market {
+  id: ID! @id
+  marketCode: MarketCodes
+  images: [Image] @relation(name: "ImageMarket")
+}
+
+enum MarketCodes {
+   EN_US
+   ES_US
+   CH_US
+ }
 
 
 

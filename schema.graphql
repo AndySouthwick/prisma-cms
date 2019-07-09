@@ -7,15 +7,24 @@ type Mutation {
   updateInputType(inputTypeId: ID!, label: String, help: String, input: Input):InputType
   createDraft(title: String!, userId: ID!): Page
   publish(pageId: ID!): Page
-  createContentArea(pageId: ID, areaName: String): ContentArea
+  createContentArea(pageName: String, pageId: ID, areaName: String): ContentArea
   updateContentArea(areaId: ID,  areaName: String, order: Int):ContentArea
-  createText(inputTypeName: String, inputTypeValue: String): Text
-  addContentToArea(areaId: ID, contentTypeName: String): Content
+  createText(contentId: ID, inputTypeName: String, inputTypeValue: String): Text
+  updateText(id: ID! inputTypeName: String, inputTypeValue: String): Text
+  updateRichText(id: ID! inputTypeName: String, inputTypeValue: String): Text
+  addContentToArea(areaId: ID, contentTypeName: String, content: ID): Content
   addContentToPage(pageId: ID, contentTypeName: String): Content
   addTextToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): Text
   addRichTextToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): RichText
   addReferenceToContent(contentId: ID! inputTypeName: String, inputTypeValue: String): Reference
   updateContent(file: String, togle: Boolean): Content
+
+  #image
+
+  updateImage(id: ID!, altText: String, imageSizeOnly: ImageType,  marketCode: MarketCodes): Image
+  createImage(imageUrl: String!, altText: String!, imageDimensions: String, thumbnail: String, imageSizeOnly: ImageType): Image
+  addImageToMarket(imageId: ID! marketCode: MarketCodes): [Image]
+  deleteImage(id: ID!): Image
 }
 
 type AuthenticatedToken {
@@ -23,13 +32,18 @@ type AuthenticatedToken {
 }
 
 type Query {
+  allImages: [Image]
+  allMarkets: [Market]
+  filterImagesByMarket(orderBy: MarketCodes): [Market]
+  filterImagesByDimensions(filter: String): [Image]
+  imageHasMarkets(imageId: ID!):[Image]
   inputTypesOfContentType(contentTypeId: ID, contentTypeName: String): [InputType!]
   isAuthenticated:AuthenticatedToken
   allContentTypes:[ContentType]
   inputTypes: [InputType]
-  page(pageId: ID! orderBy: SortableField): Page
+  page(pageName: String, pageId: ID! orderBy: SortableField): Page
   contentAreas(orderBy: SortableField): [ContentArea!]!
-  contentAreasOnPage(pageId: ID, orderBy: SortableField): [ContentArea!]!
+  contentAreasOnPage(pageName: String, pageId: ID, orderBy: SortableField): [ContentArea!]!
   allUsers: [User]
   allContent: [Content]
   contentArea(areaId: ID): ContentArea
@@ -110,6 +124,32 @@ type InputType {
   contentType: ContentType!
 }
 
+type Image {
+  id: ID!
+  imageUrl: String
+  altText: String
+  markets: [Market]
+  imageDimensions: String
+  thumbnail: String
+}
+type Market {
+  id: ID!
+  marketCode: MarketCodes
+  images: [Image]
+}
+
+enum MarketCodes {
+  EN_US
+  ES_US
+  CH_US
+}
+
+enum ImageType {
+  Cover
+  Card
+  Hero
+  Product
+}
 enum Input{
   TEXT
   RICH_TEXT

@@ -8,7 +8,7 @@ const sharp = require('sharp');
 const smartcrop = require('smartcrop-sharp');
 const fileUpload = require('express-fileupload');
 const express = require('express')
-
+const fileUploadServer = require('./utils/express-server')
 
   main = async () => {
   const cName = await prisma.contents().contentTypeName();
@@ -17,10 +17,11 @@ const express = require('express')
   }
 setInterval(() => {
   main()
-}, 86400000)
+}, 43200000)
 
 
 const server = new GraphQLServer({
+  fileUploadServer,
   typeDefs: importSchema('schema.graphql'),
   resolvers,
   context: {
@@ -60,9 +61,9 @@ server.post('/images', async (req, res) =>  {
   const fileName = src.substr(lastSlash + 1)
   await applySmartCrop(src, `public/images/1110x686/${fileName}`, 1110, 686);
   await applySmartCrop(src, `public/images/100x100/${fileName}`, 100, 100);
-  // await applySmartCrop(src, `public/images/320x192/${fileName}`, 320, 192);
+  await applySmartCrop(src, `public/images/320x192/${fileName}`, 320, 192);
   await applySmartCrop(src, `public/images/1440x1024/${fileName}`, 1440, 1024);
-  // await applySmartCrop(src, `public/images/150x150/${fileName}`, 150, 150);
+  await applySmartCrop(src, `public/images/150x150/${fileName}`, 150, 150);
   res.sendStatus(200)
 })
 

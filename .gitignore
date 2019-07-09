@@ -2,3 +2,4 @@
 node_modules/
 generated/
 secrets.js
+public/images

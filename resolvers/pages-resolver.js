@@ -3,6 +3,7 @@ module.exports = {
     page(root, args, context){
       return context.prisma.page({
         id: args.pageId,
+        title: args.pageName
       })
     },
     allPages(r, a, c){

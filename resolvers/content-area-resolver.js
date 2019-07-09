@@ -1,16 +1,19 @@
 module.exports = {
   Mutation:  {
     createContentArea(r,a,c){
-      console.log(a)
       return c.prisma.createContentArea({
         page: {
-          connect: {id: a.pageId}
+          connect: {
+            id: a.pageId,
+            title: a.pageName
+          }
         },
         areaName: a.areaName,
         order: a.order
       })
     },
     updateContentArea(r,a,c){
+      console.log(a)
       return c.prisma.updateContentArea({
         where: {id: a.areaId},
         data: {
@@ -28,6 +31,7 @@ module.exports = {
     contentAreasOnPage(r,a,c){
       console.log(a)
     return c.prisma.page({
+      title: a.pageName,
       id: a.pageId,
     }).contentAreas({
       orderBy: a.orderBy

@@ -1,8 +1,7 @@
-
-
 module.exports = {
   Mutation: {
     addContentToArea(r, a, c){
+      console.log('from addContentToArea', a)
       return c.prisma.createContent({
         contentTypeName: a.contentTypeName,
         contentArea: {
@@ -15,18 +14,41 @@ module.exports = {
         contentTypeName: a.contentTypeName,
         page: {
           connect: {id: a.pageId}
-        }
+        } ``
       })
     },
     addTextToContent(r,a,c){
+      console.log(a);
       return c.prisma.createText({
         content: {
           connect: {id: a.contentId}
         },
         inputTypeName: a.inputTypeName,
-        inputTypeValue: a.inputTypeValue
+        inputTypeValue: a.inputTypeValue,
       })
-    }
+    },
+    addRichTextToContent(r,a,c){
+      console.log(a);
+      return c.prisma.createRichText({
+        content: {
+          connect: {id: a.contentId}
+        },
+        inputTypeName: a.inputTypeName,
+        inputTypeValue: a.inputTypeValue,
+      })
+    },
+    updateText(r,a,c){
+      return c.prisma.updateText({
+        where: { id: a.id },
+        data: { inputTypeName: a.inputTypeName, inputTypeValue: a.inputTypeValue },
+      })
+    },
+    updateRichText(r,a,c){
+      return c.prisma.updateRichText({
+        where: { id: a.id },
+        data: { inputTypeName: a.inputTypeName, inputTypeValue: a.inputTypeValue },
+      })
+    },
   },
   Query: {
     content(r,a,c){
@@ -43,9 +65,16 @@ module.exports = {
       return c.prisma.content()
     },
     texts(r,a,c){
+      console.log('texts')
       return c.prisma.content({
         id: r.id
       }).texts()
+    },
+    richTexts(r,a,c){
+      console.log('richtexts')
+      return c.prisma.content({
+        id: r.id
+      }).richTexts()
     },
     page(r,a,c){
       return c.prisma.content({
@@ -56,6 +85,13 @@ module.exports = {
   Text: {
     content(r,a,c){
       return c.prisma.texts({
+        id: r.id
+      }).content()
+    }
+  },
+  RichText: {
+    content(r,a,c){
+      return c.prisma.richTexts({
         id: r.id
       }).content()
     }

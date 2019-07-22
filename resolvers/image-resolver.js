@@ -87,9 +87,9 @@ module.exports = {
     async allImages(root, args, context){
       return context.prisma.images()
     },
-    async allMarkets(root, args, context){
-      return context.prisma.markets()
-    },
+    // async allMarkets(root, args, context){
+    //   return context.prisma.markets()
+    // },
     async filterImagesByMarket(root, args, context){
       return context.prisma.markets({
         where: {

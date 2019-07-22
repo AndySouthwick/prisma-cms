@@ -3,6 +3,7 @@ type User {
   email: String @unique
   name: String!
   pages: [Page!]!
+  posts: [Post!]!
   hashed: String!
 }
 
@@ -12,6 +13,16 @@ type Page {
   published: Boolean! @default(value: false)
   user: User @relation(link: INLINE)
   contentAreas: [ContentArea]
+  marketCode: MarketCodes @default(value: EN_US)
+}
+
+type Post {
+id: ID! @id
+  title: String!@unique
+  published: Boolean! @default(value: false)
+  user: User @relation(link: INLINE)
+  contentAreas: [ContentArea]
+  marketCode: MarketCodes @default(value: EN_US)
 }
 
 type ContentArea {
@@ -20,6 +31,14 @@ type ContentArea {
  content: [Content]
  page: Page!  @relation(link: INLINE)
  order: Int! @default(value: 1)
+ iterable: Boolean
+}
+
+type templateArea {
+ id: ID! @id
+ content: [Content]
+ order: Int! @default(value: 1)
+ marketCode: MarketCodes @default(value: EN_US)
 }
 
 type Content {
@@ -32,14 +51,16 @@ type Content {
  reference: [Reference]
  toggle: Boolean
  contentArea: ContentArea  @relation(link: INLINE)
+ iterable: Boolean
 }
 
 type Text {
-id: ID! @id
-content: Content  @relation(link: INLINE)
- inputTypeName: String
+  id: ID! @id
+  content: Content  @relation(link: INLINE)
+  inputTypeName: String
   inputTypeValue: String
 }
+
 type RichText {
 id: ID! @id
 content: Content  @relation(link: INLINE)
@@ -55,23 +76,24 @@ content: Content  @relation(link: INLINE)
 
 
 
-
-
-
-
 type ContentType {
  id: ID! @id
  typeName: String! @unique
  inputTypes: [InputType]
+ blogContentType: Boolean
+ templateArea: Boolean
+ iterable: Boolean @default(value: false)
 }
 
+
+
 type InputType {
-orderNumber: Int
-id: ID! @id
-label: String
-help: String
-input: Input
-contentType: ContentType!  @relation(link: INLINE)
+  orderNumber: Int
+  id: ID! @id
+  label: String
+  help: String
+  input: Input
+  contentType: ContentType!  @relation(link: INLINE)
 }
 
 type Image {
@@ -97,11 +119,11 @@ enum MarketCodes {
 
 
 enum Input{
-ITERABLE
-TEXT
-RICH_TEXT
-FILE_UPLOAD
-DATE_RANGE
-REFERENCE
-TOGGLE
+  SELECT
+  TEXT
+  RICH_TEXT
+  FILE_UPLOAD
+  DATE_RANGE
+  REFERENCE
+  TOGGLE
 }

@@ -9,14 +9,6 @@ module.exports = {
         }
       })
     },
-    addContentToPage(r, a, c){
-      return c.prisma.createContent({
-        contentTypeName: a.contentTypeName,
-        page: {
-          connect: {id: a.pageId}
-        } ``
-      })
-    },
     addTextToContent(r,a,c){
       console.log(a);
       return c.prisma.createText({

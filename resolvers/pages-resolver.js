@@ -1,3 +1,4 @@
+
 module.exports = {
   Query: {
     page(root, args, context){
@@ -8,13 +9,15 @@ module.exports = {
     },
     allPages(r, a, c){
       return c.prisma.pages()
-    }
+    },
   },
   Mutation: {
     createDraft(root, args, context) {
-      console.log(args)
+      const title = args.title.replace(/\s+/g, '-').toLowerCase();
+      console.log(title)
+      // console.log(args)
       return context.prisma.createPage({
-        title: args.title,
+        title: title,
         user: {
           connect: { id: args.userId },
         },

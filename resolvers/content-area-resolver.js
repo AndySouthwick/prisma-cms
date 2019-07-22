@@ -9,7 +9,8 @@ module.exports = {
           }
         },
         areaName: a.areaName,
-        order: a.order
+        order: a.order,
+        iterable: a.iterable
       })
     },
     updateContentArea(r,a,c){

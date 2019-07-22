@@ -5,6 +5,21 @@ module.exports = {
         typeName: a.typeName
       })
     },
+    updateContentType(r, a, c){
+      console.log(a)
+       c.prisma.updateContentType({
+        where: { id: a.id },
+        data: {typeName: a.typeName,
+                iterable: a.iterable}
+      })
+
+      return c.prisma.updateManyContentAreas({
+        where: { areaName: a.typeName },
+        data: {
+          iterable: a.iterable
+        }
+      })
+    },
     addInputTypeToContentType(r, a, c){
       return c.prisma.createInputType({
         label: a.label,
@@ -27,6 +42,11 @@ module.exports = {
     }
   },
   Query: {
+    contentType(r,a,c){
+      return c.prisma.contentType({
+        typeName: a.name
+      })
+    },
     allContentTypes(r, a, c){
       return c.prisma.contentTypes()
     },

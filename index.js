@@ -10,14 +10,14 @@ const fileUpload = require('express-fileupload');
 const express = require('express')
 const fileUploadServer = require('./utils/express-server')
 
-  main = async () => {
-  const cName = await prisma.contents().contentTypeName();
-    const d = new Date()
-    console.log(d.getMonth(),d.getDate(), d.getFullYear())
-  }
-setInterval(() => {
-  main()
-}, 43200000)
+//   main = async () => {
+//   const cName = await prisma.contents().contentTypeName();
+//     const d = new Date()
+//     console.log(d.getMonth(),d.getDate(), d.getFullYear())
+//   }
+// setInterval(() => {
+//   main()
+// }, 43200000)
 
 
 const server = new GraphQLServer({

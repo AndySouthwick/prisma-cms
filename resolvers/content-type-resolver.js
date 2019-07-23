@@ -6,7 +6,6 @@ module.exports = {
       })
     },
     updateContentType(r, a, c){
-      console.log(a)
        c.prisma.updateContentType({
         where: { id: a.id },
         data: {typeName: a.typeName,
@@ -72,7 +71,6 @@ module.exports = {
  InputType: {
 
     contentType(r, a, c){
-      console.log(r)
       return  c.prisma.inputType({
         id: r.id
       }).contentTypes()

@@ -1,7 +1,6 @@
 module.exports = {
   Mutation: {
     addContentToArea(r, a, c){
-      console.log('from addContentToArea', a)
       return c.prisma.createContent({
         contentTypeName: a.contentTypeName,
         contentArea: {
@@ -10,7 +9,6 @@ module.exports = {
       })
     },
     addTextToContent(r,a,c){
-      console.log(a);
       return c.prisma.createText({
         content: {
           connect: {id: a.contentId}
@@ -20,7 +18,6 @@ module.exports = {
       })
     },
     addRichTextToContent(r,a,c){
-      console.log(a);
       return c.prisma.createRichText({
         content: {
           connect: {id: a.contentId}
@@ -57,13 +54,11 @@ module.exports = {
       return c.prisma.content()
     },
     texts(r,a,c){
-      console.log('texts')
       return c.prisma.content({
         id: r.id
       }).texts()
     },
     richTexts(r,a,c){
-      console.log('richtexts')
       return c.prisma.content({
         id: r.id
       }).richTexts()

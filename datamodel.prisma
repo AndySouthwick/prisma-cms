@@ -32,6 +32,7 @@ type ContentArea {
  page: Page!  @relation(link: INLINE)
  order: Int! @default(value: 1)
  iterable: Boolean
+ published: Boolean @default(value: false)
 }
 
 type templateArea {
@@ -52,6 +53,7 @@ type Content {
  toggle: Boolean
  contentArea: ContentArea  @relation(link: INLINE)
  iterable: Boolean
+ published: Boolean @default(value: false)
 }
 
 type Text {

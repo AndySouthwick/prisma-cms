@@ -14,7 +14,6 @@ module.exports = {
   Mutation: {
     createDraft(root, args, context) {
       const title = args.title.replace(/\s+/g, '-').toLowerCase();
-      console.log(title)
       // console.log(args)
       return context.prisma.createPage({
         title: title,
@@ -32,13 +31,11 @@ module.exports = {
   },
   Page: {
     user(root, args, context) {
-      console.log('from user in page', root.id)
       return context.prisma.page({
         id: root.id,
       }).user()
     },
     contentAreas(root, args, context){
-      console.log('this ran')
       return context.prisma.page({
         id: root.id,
       }).contentAreas()

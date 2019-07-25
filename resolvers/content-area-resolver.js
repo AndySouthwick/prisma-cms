@@ -32,6 +32,7 @@ module.exports = {
     contentAreasOnPage(r,a,c){
       console.log(a)
     return c.prisma.page({
+      marketCode: a.marketCode,
       title: a.pageName,
       id: a.pageId,
     }).contentAreas({

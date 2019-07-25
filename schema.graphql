@@ -11,7 +11,7 @@ type Mutation {
   updateInputType(inputTypeId: ID!, label: String, help: String, input: Input):InputType
 
   #pages
-  createDraft(title: String!, userId: ID!): Page
+  createDraft(title: String!, userId: ID!, marketCode: String): Page
   publish(pageId: ID!): Page
 
   #contentAreas
@@ -59,12 +59,13 @@ type Query {
   inputTypes: [InputType]
   page(pageName: String, pageId: ID! orderBy: SortableField): Page
   contentAreas(orderBy: SortableField): [ContentArea!]!
-  contentAreasOnPage(pageName: String, pageId: ID, orderBy: SortableField): [ContentArea!]!
+  contentAreasOnPage(pageName: String, pageId: ID, orderBy: SortableField, marketCode: MarketCodes): [ContentArea!]!
   allUsers: [User]
   allContent: [Content]
   contentArea(areaId: ID): ContentArea
   allPages: [Page!]!
   content(id: ID!):Content
+  templateAreas: [TemplateArea]
 }
 
 type User {

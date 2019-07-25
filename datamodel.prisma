@@ -35,8 +35,9 @@ type ContentArea {
  published: Boolean @default(value: false)
 }
 
-type templateArea {
+type TemplateArea {
  id: ID! @id
+ areaName: String
  content: [Content]
  order: Int! @default(value: 1)
  marketCode: MarketCodes @default(value: EN_US)
@@ -52,6 +53,7 @@ type Content {
  reference: [Reference]
  toggle: Boolean
  contentArea: ContentArea  @relation(link: INLINE)
+ templateArea: TemplateArea @relation(link: INLINE)
  iterable: Boolean
  published: Boolean @default(value: false)
 }

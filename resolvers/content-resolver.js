@@ -1,5 +1,14 @@
 module.exports = {
   Mutation: {
+    addContentToTemplateArea(r,a,c){
+      return c.prisma.createContent({
+        contentTypeName: a.contentTypeName,
+        templateArea: {
+          connect: {id: a.areaId}
+        }
+        })
+    },
+
     addContentToArea(r, a, c){
       return c.prisma.createContent({
         contentTypeName: a.contentTypeName,
@@ -50,6 +59,9 @@ module.exports = {
     }
   },
   Content: {
+    templateArea(r, a, c){
+      return c.prisma.content()
+    },
     contentArea(r, a, c){
       return c.prisma.content()
     },

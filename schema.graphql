@@ -5,8 +5,8 @@ type Mutation {
   loginUser(email: String!, hashed: String!):AuthenticatedToken
 
   #contentType
-  createContentType(typeName: String, inputType: ID):ContentType
-  updateContentType(id: ID!, typeName: String, iterable: Boolean):ContentType
+  createContentType(typeName: String, inputType: ID, blog: Boolean, content: Boolean, template: Boolean):ContentType
+  updateContentType(id: ID!, typeName: String, iterable: Boolean, blog: Boolean, content: Boolean, template: Boolean):ContentType
   addInputTypeToContentType(contentTypeId: ID!, label: String, help: String, input: Input):InputType
   updateInputType(inputTypeId: ID!, label: String, help: String, input: Input):InputType
 
@@ -51,6 +51,7 @@ type Query {
   allMarkets: [Market]
   filterImagesByMarket(orderBy: MarketCodes): [Market]
   filterImagesByDimensions(filter: String): [Image]
+  filteredContentTypes(templateArea: Boolean, contentArea: Boolean, blogArea: Boolean): [ContentType]
   imageHasMarkets(imageId: ID!):[Image]
   inputTypesOfContentType(contentTypeId: ID, contentTypeName: String): [InputType!]
   isAuthenticated:AuthenticatedToken
@@ -103,6 +104,7 @@ type ContentArea {
 
 
 type Content {
+  order: Int
   templateArea: TemplateArea
   contentArea: ContentArea
   page: Page
@@ -114,7 +116,6 @@ type Content {
   reference: [Reference]
   toggle: Boolean
   iterable: Boolean
-
 }
 
 type Text {
@@ -143,6 +144,9 @@ type ContentType {
   typeName: String!
   inputTypes: [InputType]
   iterable: Boolean
+  blogArea: Boolean
+  templateArea: Boolean
+  contentArea: Boolean
 }
 type InputType {
   id: ID!

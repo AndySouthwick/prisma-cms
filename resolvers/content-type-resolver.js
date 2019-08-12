@@ -9,7 +9,10 @@ module.exports = {
        c.prisma.updateContentType({
         where: { id: a.id },
         data: {typeName: a.typeName,
-                iterable: a.iterable}
+                iterable: a.iterable,
+                blogArea: a.blog,
+                contentArea: a.content,
+                templateArea: a.template}
       })
 
       return c.prisma.updateManyContentAreas({
@@ -46,6 +49,29 @@ module.exports = {
         typeName: a.name
       })
     },
+    filteredContentTypes(r,a,c){
+      if(a.templateArea){
+        return c.prisma.contentTypes({
+          where: {
+            templateArea: true,
+          }
+        })
+      }
+      if(a.blogArea){
+        return c.prisma.contentTypes({
+          where: {
+            blogArea: true,
+          }
+        })
+      }
+      if(a.contentArea){
+        return c.prisma.contentTypes({
+          where: {
+           contentArea: true,
+          }
+        })
+      }
+    },
     allContentTypes(r, a, c){
       return c.prisma.contentTypes()
     },
@@ -53,7 +79,7 @@ module.exports = {
       return c.prisma.inputTypes()
     },
     inputTypesOfContentType(r,a,c){
-      console.log(a)
+      // console.log(a)
       return c.prisma.contentType({
         id: a.contentTypeId,
         typeName: a.contentTypeName

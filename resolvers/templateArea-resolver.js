@@ -10,7 +10,7 @@ module.exports = {
   Query: {
     templateAreas(r,a,c){
     return c.prisma.templateAreas()
-  }
+  },
   },
   TemplateArea: {
     content(r,a,c){

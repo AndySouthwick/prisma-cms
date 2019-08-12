@@ -44,7 +44,7 @@ type TemplateArea {
 }
 
 type Content {
-  order: Int
+  order: Int  @default(value: 1)
  id: ID! @id
  contentTypeName: String
  texts: [Text]
@@ -85,8 +85,10 @@ type ContentType {
  typeName: String! @unique
  inputTypes: [InputType]
  blogContentType: Boolean
- templateArea: Boolean
  iterable: Boolean @default(value: false)
+ templateArea: Boolean @default(value: false)
+ contentArea: Boolean @default(value: true)
+ blogArea: Boolean @default(value: false)
 }
 
 

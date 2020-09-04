@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.4",
     "graphql-import": "^0.7.1",
-    "graphql-shield": "^5.3.5",
+    "graphql-shield": "^7.3.5",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.5.1",
     "prisma-client-lib": "^1.30.4",
